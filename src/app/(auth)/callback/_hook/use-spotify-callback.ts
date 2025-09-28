@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+// Función helper para obtener parámetros de URL
+const getUrlParams = () => {
+  if (typeof window === 'undefined') return new URLSearchParams();
+  return new URLSearchParams(window.location.search);
+};
 
 export function useSpotifyCallback() {
   const [status, setStatus] = useState<"processing" | "success" | "error">(
@@ -8,7 +14,6 @@ export function useSpotifyCallback() {
   const [error, setError] = useState("");
   const [hasProcessed, setHasProcessed] = useState(false);
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,8 +21,9 @@ export function useSpotifyCallback() {
 
     const handleCallback = async () => {
       setHasProcessed(true);
-      const code = searchParams.get("code");
-      const errorParam = searchParams.get("error");
+      const urlParams = getUrlParams();
+      const code = urlParams.get("code");
+      const errorParam = urlParams.get("error");
 
       console.log("Callback URL params:", {
         code: code ? `${code.substring(0, 10)}...` : null,
@@ -89,7 +95,7 @@ export function useSpotifyCallback() {
     };
 
     handleCallback();
-  }, [searchParams, router, hasProcessed]);
+  }, [router, hasProcessed]);
 
   return { status, error };
 }
