@@ -8,8 +8,10 @@ export function Navigation() {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
-    if (path === "/search") {
-      return pathname === "/search" || pathname.startsWith("/artist/");
+    if (path === "/dashboard") {
+      return (
+        pathname === "/dashboard" || pathname.startsWith("/dashboard/artist/")
+      );
     }
     return pathname === path;
   };
@@ -17,7 +19,10 @@ export function Navigation() {
   return (
     <header className="h-[87px] flex items-center justify-between px-6 lg:px-20 py-6">
       <div className="flex items-center">
-        <Link href="/" className="text-xl lg:text-2xl font-bold text-[#d6f379] hover:text-white transition-colors">
+        <Link
+          href="/"
+          className="text-xl lg:text-2xl font-bold text-[#d6f379] hover:text-white transition-colors"
+        >
           ♪ Music App
         </Link>
       </div>
@@ -25,7 +30,7 @@ export function Navigation() {
       {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center space-x-10">
         <Link
-          href="/search"
+          href="/dashboard"
           className={`font-montserrat font-semibold transition-colors ${
             isActive("/search")
               ? "text-[#d6f379]"
@@ -35,7 +40,7 @@ export function Navigation() {
           Buscar
         </Link>
         <Link
-          href="/albums"
+          href="/dashboard/albums"
           className={`font-montserrat font-semibold transition-colors ${
             isActive("/albums")
               ? "text-[#d6f379]"
@@ -57,9 +62,9 @@ export function Navigation() {
       {/* Mobile Navigation */}
       <div className="flex lg:hidden items-center space-x-3">
         <Link
-          href="/search"
+          href="/dashboard"
           className={`font-montserrat font-semibold transition-colors text-sm ${
-            isActive("/search")
+            isActive("/dashboard")
               ? "text-[#d6f379]"
               : "text-white hover:text-[#d6f379]"
           }`}
@@ -67,9 +72,9 @@ export function Navigation() {
           Buscar
         </Link>
         <Link
-          href="/albums"
+          href="/dashboard/albums"
           className={`font-montserrat font-semibold transition-colors text-sm ${
-            isActive("/albums")
+            isActive("/dashboard/albums")
               ? "text-[#d6f379]"
               : "text-white hover:text-[#d6f379]"
           }`}
