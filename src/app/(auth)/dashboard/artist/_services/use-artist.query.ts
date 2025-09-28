@@ -1,5 +1,4 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
 
@@ -11,7 +10,6 @@ export interface SpotifyArtist {
   popularity: number;
   external_urls: { spotify: string };
 }
-
 
 interface IBodyArtist {
   artistId: string;
@@ -36,7 +34,9 @@ export const fetchArtist = async ({
   queryKey,
 }: QueryFunctionContext<ReturnType<typeof fetchArtistQueryKeys.detail>>) => {
   try {
-    const response = await axiosSpotifyApi.get<SpotifyArtist>(`/artists/${queryKey[1]}`);
+    const response = await axiosSpotifyApi.get<SpotifyArtist>(
+      `/artists/${queryKey[1]}`
+    );
     return response.data;
   } catch (error) {
     return Promise.reject(handleAxiosError(error));

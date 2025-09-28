@@ -1,5 +1,4 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
 
@@ -24,13 +23,18 @@ export const fetchCheckSavedAlbumsQueryKeys = {
 
 export const fetchCheckSavedAlbums = async ({
   queryKey,
-}: QueryFunctionContext<ReturnType<typeof fetchCheckSavedAlbumsQueryKeys.list>>) => {
+}: QueryFunctionContext<
+  ReturnType<typeof fetchCheckSavedAlbumsQueryKeys.list>
+>) => {
   try {
-    const response = await axiosSpotifyApi.get<boolean[]>("/me/albums/contains", {
-      params: {
-        ids: queryKey[3].join(','),
+    const response = await axiosSpotifyApi.get<boolean[]>(
+      "/me/albums/contains",
+      {
+        params: {
+          ids: queryKey[3].join(","),
+        },
       }
-    });
+    );
     return response.data;
   } catch (error) {
     return Promise.reject(handleAxiosError(error));

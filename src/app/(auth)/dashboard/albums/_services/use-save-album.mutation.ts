@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
 import { fetchSavedAlbumsQueryKeys } from "./use-saved-albums.query";
@@ -31,7 +30,9 @@ export function useSaveAlbumMutation(props?: IProps) {
   return useMutation({
     mutationFn: saveAlbum,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: fetchSavedAlbumsQueryKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: fetchSavedAlbumsQueryKeys.all,
+      });
       props?.config?.onSuccess?.();
     },
     onError: (error) => {

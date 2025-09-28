@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, Home, ArrowLeft, Music2 } from "lucide-react";
+import { Search, ArrowLeft, Music2 } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardNotFoundPage() {
@@ -25,8 +25,8 @@ export default function DashboardNotFoundPage() {
             Página no encontrada
           </h1>
           <p className="font-montserrat text-gray-300 text-lg leading-relaxed">
-            La página que buscas en el dashboard no existe. Puede que el artista no esté disponible
-            o la URL sea incorrecta.
+            La página que buscas en el dashboard no existe. Puede que el artista
+            no esté disponible o la URL sea incorrecta.
           </p>
         </div>
 
@@ -90,7 +90,9 @@ export default function DashboardNotFoundPage() {
 
         {/* Quick Links */}
         <div className="space-y-3 pt-4 border-t border-gray-700">
-          <p className="font-montserrat text-gray-400 text-sm">Enlaces rápidos del dashboard:</p>
+          <p className="font-montserrat text-gray-400 text-sm">
+            Enlaces rápidos del dashboard:
+          </p>
           <div className="flex flex-wrap justify-center gap-2">
             <Link
               href="/dashboard"

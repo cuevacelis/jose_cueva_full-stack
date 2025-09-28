@@ -1,5 +1,4 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
 
@@ -44,15 +43,17 @@ export const fetchSearchArtistsQueryKeys = {
 
 export const fetchSearchArtists = async ({
   queryKey,
-}: QueryFunctionContext<ReturnType<typeof fetchSearchArtistsQueryKeys.list>>) => {
+}: QueryFunctionContext<
+  ReturnType<typeof fetchSearchArtistsQueryKeys.list>
+>) => {
   try {
     const response = await axiosSpotifyApi.get<IFetchSearchArtists>("/search", {
       params: {
         q: queryKey[2],
-        type: 'artist',
+        type: "artist",
         limit: queryKey[3].limit,
         offset: queryKey[3].offset,
-      }
+      },
     });
     return response.data;
   } catch (error) {

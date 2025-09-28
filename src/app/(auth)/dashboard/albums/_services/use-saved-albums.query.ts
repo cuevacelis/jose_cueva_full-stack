@@ -1,5 +1,4 @@
 import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
 
@@ -48,12 +47,15 @@ export const fetchSavedAlbums = async ({
   queryKey,
 }: QueryFunctionContext<ReturnType<typeof fetchSavedAlbumsQueryKeys.list>>) => {
   try {
-    const response = await axiosSpotifyApi.get<IFetchSavedAlbums>("/me/albums", {
-      params: {
-        limit: queryKey[2].limit,
-        offset: queryKey[2].offset,
+    const response = await axiosSpotifyApi.get<IFetchSavedAlbums>(
+      "/me/albums",
+      {
+        params: {
+          limit: queryKey[2].limit,
+          offset: queryKey[2].offset,
+        },
       }
-    });
+    );
     return response.data;
   } catch (error) {
     return Promise.reject(handleAxiosError(error));

@@ -5,13 +5,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Minus, Loader2 } from "lucide-react";
 import { useSavedAlbumsQuery } from "./_services/use-saved-albums.query";
 import { useRemoveAlbumMutation } from "./_services/use-remove-album.mutation";
+import Image from "next/image";
 
 export default function MyAlbumsPage() {
-  const { data: savedAlbumsData, isLoading, error } = useSavedAlbumsQuery({
+  const {
+    data: savedAlbumsData,
+    isLoading,
+    error,
+  } = useSavedAlbumsQuery({
     params: { limit: 50, offset: 0 },
     config: {
-      staleTime: 2 * 60 * 1000
-    }
+      staleTime: 2 * 60 * 1000,
+    },
   });
   const removeAlbumMutation = useRemoveAlbumMutation();
 
@@ -144,14 +149,12 @@ export default function MyAlbumsPage() {
                 >
                   <CardContent className="p-4 lg:p-6 space-y-4 lg:space-y-6">
                     <div className="aspect-square rounded-xl overflow-hidden opacity-80">
-                      <img
+                      <Image
+                        width={album.images[0]?.width}
+                        height={album.images[0]?.height}
                         src={getAlbumImage(album.images)}
                         alt={album.name}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://via.placeholder.com/272x241";
-                        }}
                       />
                     </div>
 
