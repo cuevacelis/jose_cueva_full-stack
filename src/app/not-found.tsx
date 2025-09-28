@@ -44,14 +44,15 @@ export default function NotFoundPage() {
             </Button>
           </Link>
 
-          <Button
-            onClick={() => window.history.back()}
-            variant="outline"
-            className="w-full sm:w-auto border-gray-600 text-white hover:bg-gray-800 font-montserrat font-semibold rounded-2xl px-6 py-3"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver atrás
-          </Button>
+          <Link href="/dashboard">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto border-gray-600 text-white hover:bg-gray-800 font-montserrat font-semibold rounded-2xl px-6 py-3"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Volver al Dashboard
+            </Button>
+          </Link>
         </div>
 
         {/* Quick Links */}

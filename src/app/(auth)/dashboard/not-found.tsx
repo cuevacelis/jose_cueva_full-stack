@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, ArrowLeft, Music2 } from "lucide-react";
+import { Search, Music2 } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardNotFoundPage() {
@@ -74,18 +74,6 @@ export default function DashboardNotFoundPage() {
               Mis álbumes
             </Button>
           </Link>
-        </div>
-
-        {/* Additional Actions */}
-        <div className="flex justify-center">
-          <Button
-            onClick={() => window.history.back()}
-            variant="ghost"
-            className="text-gray-400 hover:text-white font-montserrat text-sm"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver atrás
-          </Button>
         </div>
 
         {/* Quick Links */}

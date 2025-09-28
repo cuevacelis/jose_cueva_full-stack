@@ -5,6 +5,8 @@ import { SuccessState } from "./_components/success-state";
 import { ErrorState } from "./_components/error-state";
 import { useSpotifyCallback } from "./_hook/use-spotify-callback";
 
+export const dynamic = "force-dynamic";
+
 export default function SpotifyCallbackPage() {
   const { status, error } = useSpotifyCallback();
 
