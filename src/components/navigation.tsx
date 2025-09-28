@@ -1,29 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { LogOut, Sun, Menu } from "lucide-react";
+import { LogOut, Sun } from "lucide-react";
 import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
 import { Button } from "@/components/ui/button";
 
 export function Navigation() {
-  const pathname = usePathname();
   const { logout } = useSpotifyAuth();
-
-  const isActive = (path: string) => {
-    if (path === "/dashboard") {
-      return (
-        pathname === "/dashboard" || pathname.startsWith("/dashboard/artist/")
-      );
-    }
-    return pathname === path;
-  };
 
   return (
     <header className="h-[87px] flex items-center justify-between px-6 lg:px-20 py-6">
       <div className="flex items-center">
         <Link
-          href="/"
+          href="/dashboard"
           className="text-xl lg:text-2xl font-bold text-[#d6f379] hover:text-white transition-colors"
         >
           ♪ Music App
@@ -34,21 +23,13 @@ export function Navigation() {
       <div className="hidden lg:flex items-center space-x-10">
         <Link
           href="/dashboard"
-          className={`font-montserrat font-semibold transition-colors ${
-            isActive("/search")
-              ? "text-[#d6f379]"
-              : "text-white hover:text-[#d6f379]"
-          }`}
+          className="font-montserrat font-semibold transition-colors text-white hover:text-[#d6f379]"
         >
           Buscar
         </Link>
         <Link
           href="/dashboard/albums"
-          className={`font-montserrat font-semibold transition-colors ${
-            isActive("/albums")
-              ? "text-[#d6f379]"
-              : "text-white hover:text-[#d6f379]"
-          }`}
+          className="font-montserrat font-semibold transition-colors text-white hover:text-[#d6f379]"
         >
           Mis albumes
         </Link>
@@ -67,21 +48,13 @@ export function Navigation() {
       <div className="flex lg:hidden items-center space-x-3">
         <Link
           href="/dashboard"
-          className={`font-montserrat font-semibold transition-colors text-sm ${
-            isActive("/dashboard")
-              ? "text-[#d6f379]"
-              : "text-white hover:text-[#d6f379]"
-          }`}
+          className="font-montserrat font-semibold transition-colors text-sm text-white hover:text-[#d6f379]"
         >
           Buscar
         </Link>
         <Link
           href="/dashboard/albums"
-          className={`font-montserrat font-semibold transition-colors text-sm ${
-            isActive("/dashboard/albums")
-              ? "text-[#d6f379]"
-              : "text-white hover:text-[#d6f379]"
-          }`}
+          className="font-montserrat font-semibold transition-colors text-sm text-white hover:text-[#d6f379]"
         >
           My albums
         </Link>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,25 +18,73 @@ import {
 import { Search, Loader2 } from "lucide-react";
 import { useSearchArtistsQuery } from "./_services/use-search-artists.query";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useQueryString } from "@/hooks/use-query-string";
+import Image from "next/image";
 
 export default function SearchPage() {
-  const [searchTerm, setSearchTerm] = useState("Nirvana");
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { updateQueryString } = useQueryString();
+
+  const [searchTerm, setSearchTerm] = useState(
+    () => searchParams.get("q") || "Nirvana"
+  );
+  const [currentPage, setCurrentPage] = useState(
+    () => Number(searchParams.get("page")) || 1
+  );
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const limit = 20;
   const offset = (currentPage - 1) * limit;
 
-  const { data: searchResults, isLoading, error } = useSearchArtistsQuery({
+  useEffect(() => {
+    const currentQuery = searchParams.get("q") || "Nirvana";
+
+    if (debouncedSearchTerm !== currentQuery) {
+      const queryString = updateQueryString({
+        q: debouncedSearchTerm,
+        page: "1",
+      });
+      router.push(`?${queryString}`);
+      setCurrentPage(1);
+    }
+  }, [debouncedSearchTerm, router, updateQueryString, searchParams]);
+
+  useEffect(() => {
+    const currentPageParam = Number(searchParams.get("page")) || 1;
+
+    if (
+      currentPage !== currentPageParam &&
+      debouncedSearchTerm === (searchParams.get("q") || "Nirvana")
+    ) {
+      const queryString = updateQueryString({
+        q: debouncedSearchTerm,
+        page: currentPage.toString(),
+      });
+      router.push(`?${queryString}`);
+    }
+  }, [
+    currentPage,
+    router,
+    updateQueryString,
+    searchParams,
+    debouncedSearchTerm,
+  ]);
+
+  const {
+    data: searchResults,
+    isLoading,
+    error,
+  } = useSearchArtistsQuery({
     params: {
       query: debouncedSearchTerm,
       limit,
-      offset
+      offset,
     },
     config: {
       enabled: debouncedSearchTerm.length > 0,
-      staleTime: 5 * 60 * 1000
-    }
+      staleTime: 5 * 60 * 1000,
+    },
   });
 
   const artists = searchResults?.artists?.items || [];
@@ -51,10 +100,14 @@ export default function SearchPage() {
     return count.toString();
   };
 
-  const getArtistImage = (images: Array<{ url: string; height: number; width: number }>) => {
-    return images.find(img => img.height >= 300)?.url ||
-           images[0]?.url ||
-           "https://via.placeholder.com/272x241";
+  const getArtistImage = (
+    images: Array<{ url: string; height: number; width: number }>
+  ) => {
+    return (
+      images.find((img) => img.height >= 300)?.url ||
+      images[0]?.url ||
+      "https://via.placeholder.com/272x241"
+    );
   };
 
   return (
@@ -91,7 +144,9 @@ export default function SearchPage() {
             ) : (
               <Search className="h-4 w-4 mr-2" />
             )}
-            <span className="hidden sm:inline">{isLoading ? "Buscando..." : "Search"}</span>
+            <span className="hidden sm:inline">
+              {isLoading ? "Buscando..." : "Search"}
+            </span>
           </Button>
         </div>
       </div>
@@ -104,7 +159,11 @@ export default function SearchPage() {
           </p>
         ) : (
           <p className="font-montserrat text-center text-gray-300 text-sm lg:text-base">
-            {isLoading ? "Buscando..." : `Mostrando ${artists.length} resultados de ${totalResults.toLocaleString()}`}
+            {isLoading
+              ? "Buscando..."
+              : `Mostrando ${
+                  artists.length
+                } resultados de ${totalResults.toLocaleString()}`}
           </p>
         )}
       </div>
@@ -113,7 +172,10 @@ export default function SearchPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-12 px-4 lg:px-0">
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} className="border-0 rounded-3xl p-4 lg:p-6 bg-gray-800 animate-pulse">
+            <Card
+              key={index}
+              className="border-0 rounded-3xl p-4 lg:p-6 bg-gray-800 animate-pulse"
+            >
               <CardContent className="p-0 space-y-4 lg:space-y-6">
                 <div className="aspect-square rounded-xl bg-gray-700" />
                 <div className="h-6 bg-gray-700 rounded" />
@@ -133,13 +195,12 @@ export default function SearchPage() {
               >
                 <CardContent className="p-0 space-y-4 lg:space-y-6">
                   <div className="aspect-square rounded-xl overflow-hidden opacity-80">
-                    <img
+                    <Image
+                      width={artist.images[0]?.width}
+                      height={artist.images[0]?.height}
                       src={getArtistImage(artist.images)}
                       alt={artist.name}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://via.placeholder.com/272x241";
-                      }}
                     />
                   </div>
                   <h3
@@ -163,7 +224,7 @@ export default function SearchPage() {
         ) : debouncedSearchTerm && !isLoading ? (
           <div className="col-span-full text-center py-12">
             <p className="font-montserrat text-gray-300 text-lg">
-              No se encontraron artistas para "{debouncedSearchTerm}"
+              No se encontraron artistas para &quot;{debouncedSearchTerm}&quot;
             </p>
           </div>
         ) : null}
@@ -252,9 +313,13 @@ export default function SearchPage() {
 
               <PaginationItem>
                 <PaginationNext
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  onClick={() =>
+                    setCurrentPage(Math.min(totalPages, currentPage + 1))
+                  }
                   className={`text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer ${
-                    currentPage === totalPages ? "opacity-50 pointer-events-none" : ""
+                    currentPage === totalPages
+                      ? "opacity-50 pointer-events-none"
+                      : ""
                   }`}
                 />
               </PaginationItem>
