@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut, Sun, Menu } from "lucide-react";
+import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
+import { Button } from "@/components/ui/button";
 
 export function Navigation() {
   const pathname = usePathname();
+  const { logout } = useSpotifyAuth();
 
   const isActive = (path: string) => {
     if (path === "/dashboard") {
@@ -50,13 +53,14 @@ export function Navigation() {
           Mis albumes
         </Link>
         <div className="w-px h-6 bg-gray-600" />
-        <Link
-          href="/"
-          className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors flex items-center"
+        <Button
+          onClick={logout}
+          variant="ghost"
+          className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors flex items-center p-0 h-auto"
         >
           <LogOut className="mr-2 h-4 w-4" />
           Cerrar sesión
-        </Link>
+        </Button>
       </div>
 
       {/* Mobile Navigation */}
@@ -82,12 +86,13 @@ export function Navigation() {
           My albums
         </Link>
         <div className="w-px h-4 bg-gray-600" />
-        <Link
-          href="/"
-          className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors"
+        <Button
+          onClick={logout}
+          variant="ghost"
+          className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors p-0 h-auto"
         >
           <LogOut className="h-4 w-4" />
-        </Link>
+        </Button>
         <div className="w-px h-4 bg-gray-600" />
         <Sun className="h-4 w-4 text-white" />
       </div>
