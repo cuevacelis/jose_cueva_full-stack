@@ -1,8 +1,12 @@
-import Link from "next/link";
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Music } from "lucide-react";
+import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
 
 export default function Home() {
+  const { login, loading } = useSpotifyAuth();
+
   return (
     <div className="min-h-screen bg-[#222222] relative">
       {/* Mobile header - only shown on small screens */}
@@ -33,12 +37,15 @@ export default function Home() {
             </p>
 
             <div className="pt-4">
-              <Link href="/dashboard">
-                <Button className="bg-[#d6f379] text-[#222222] font-montserrat font-semibold hover:bg-[#c4e368] px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg rounded-full flex items-center justify-center">
-                  Log in con Spotify
-                  <ArrowRight className="ml-2 lg:ml-3 h-4 w-4 lg:h-5 lg:w-5" />
-                </Button>
-              </Link>
+              <Button
+                onClick={login}
+                disabled={loading}
+                className="bg-[#d6f379] text-[#222222] font-montserrat font-semibold hover:bg-[#c4e368] px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg rounded-full flex items-center justify-center disabled:opacity-50 transition-all duration-200"
+              >
+                <Music className="mr-2 lg:mr-3 h-4 w-4 lg:h-5 lg:w-5" />
+                {loading ? "Conectando..." : "Log in con Spotify"}
+                {!loading && <ArrowRight className="ml-2 lg:ml-3 h-4 w-4 lg:h-5 lg:w-5" />}
+              </Button>
             </div>
           </div>
         </div>

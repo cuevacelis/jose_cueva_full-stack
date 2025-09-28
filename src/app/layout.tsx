@@ -36,7 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
         <TanstackProvider>
-          <SpotifyAuthProvider>{children}</SpotifyAuthProvider>
+          <SpotifyAuthProvider>
+            {children}
+          </SpotifyAuthProvider>
         </TanstackProvider>
       </body>
     </html>

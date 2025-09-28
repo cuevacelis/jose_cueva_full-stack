@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Navigation } from "@/components/navigation";
 import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
-import { LayoutProps } from "@/types/layout";
 
-export default function AuthLayout({ children }: LayoutProps) {
+export default function AuthLayout({ children }: LayoutProps<"/dashboard">) {
   const { isAuthenticated, loading } = useSpotifyAuth();
   const router = useRouter();
 

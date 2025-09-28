@@ -2,9 +2,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
-import { LayoutProps } from "@/types/layout";
 
-export default function NotAuthLayout({ children }: LayoutProps) {
+export default function NotAuthLayout({ children }: LayoutProps<"/">) {
   const { isAuthenticated, loading } = useSpotifyAuth();
   const router = useRouter();
 
