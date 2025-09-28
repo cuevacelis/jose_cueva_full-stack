@@ -1,36 +1,173 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎵 Music App - Aplicación Full-Stack con Spotify API
 
-## Getting Started
+Una aplicación web moderna desarrollada con **Next.js 15** que integra la **API de Spotify** para ofrecer una experiencia musical completa. Los usuarios pueden explorar artistas, gestionar álbumes guardados y navegar por una interfaz intuitiva y responsive.
 
-First, run the development server:
+## ✨ Características Principales
 
+- 🔐 **Autenticación con Spotify**: OAuth 2.0 para acceso seguro
+- 🔍 **Búsqueda de Artistas**: Explora y descubre nuevos artistas
+- 💾 **Gestión de Álbumes**: Guarda y organiza tus álbumes favoritos
+- 📱 **Diseño Responsive**: Optimizado para dispositivos móviles y desktop
+- ⚡ **Rendimiento Optimizado**: Utilizando Turbopack y React 19
+- 🎨 **UI Moderna**: Componentes personalizados con Tailwind CSS
+
+## 🛠️ Stack Técnico
+
+### Frontend
+- **Next.js 15** - Framework React con App Router
+- **React 19** - Biblioteca de interfaz de usuario
+- **TypeScript** - Tipado estático
+- **Tailwind CSS v4** - Framework de estilos utilitarios
+- **Radix UI** - Componentes primitivos accesibles
+- **Lucide React** - Iconografía moderna
+
+### Estado y Datos
+- **TanStack Query v5** - Gestión de estado del servidor
+- **React Hook Form** - Manejo de formularios
+- **Zod** - Validación de esquemas
+- **Axios** - Cliente HTTP
+
+### Herramientas de Desarrollo
+- **ESLint** - Linting de código
+- **pnpm** - Gestor de paquetes
+- **Turbopack** - Bundler ultra-rápido
+
+## 🚀 Instalación y Configuración
+
+### Prerrequisitos
+- Node.js 18+ 
+- pnpm (recomendado)
+- Cuenta de desarrollador de Spotify
+
+### 1. Clona el repositorio
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/cuevacelis/jose_cueva_full-stack.git
+cd jose_cueva_full-stack
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instala las dependencias
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configuración de Spotify API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Ve a [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Crea una nueva aplicación
+3. Configura las URIs de redirección:
+   - `http://localhost:3000/api/auth/spotify/callback` (desarrollo)
+   - `https://tu-dominio.com/api/auth/spotify/callback` (producción)
 
-## Learn More
+### 4. Variables de entorno
+Crea un archivo `.env.local` en la raíz del proyecto:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+# Spotify API
+SPOTIFY_CLIENT_ID=tu_client_id
+SPOTIFY_CLIENT_SECRET=tu_client_secret
+SPOTIFY_REDIRECT_URI=http://localhost:3000/api/auth/spotify/callback
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Next.js
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=tu_secret_key_segura
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 5. Ejecuta el servidor de desarrollo
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Estructura del Proyecto
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/                          # App Router de Next.js
+│   ├── (auth)/                   # Rutas autenticadas
+│   │   ├── callback/             # Manejo de callback OAuth
+│   │   └── dashboard/            # Panel principal
+│   │       ├── albums/           # Gestión de álbumes
+│   │       └── artist/           # Información de artistas
+│   ├── (not-auth)/               # Rutas públicas
+│   └── api/                      # API Routes
+├── components/                   # Componentes reutilizables
+│   └── ui/                       # Componentes base de UI
+├── context/                      # Contextos de React
+│   ├── auth/                     # Contexto de autenticación
+│   └── tanstack/                 # Configuración de TanStack Query
+├── hooks/                        # Custom hooks
+├── lib/                          # Utilidades y configuraciones
+│   ├── api/                      # Cliente API de Spotify
+│   └── utils/                    # Funciones auxiliares
+└── types/                        # Definiciones de tipos TypeScript
+```
+
+## 🔧 Scripts Disponibles
+
+```bash
+# Desarrollo con Turbopack
+pnpm dev
+
+# Construcción para producción
+pnpm build
+
+# Inicio del servidor de producción
+pnpm start
+
+# Linting del código
+pnpm lint
+```
+
+## 🎯 Funcionalidades Implementadas
+
+### Autenticación
+- ✅ OAuth 2.0 con Spotify
+- ✅ Gestión de tokens de acceso
+- ✅ Renovación automática de tokens
+- ✅ Estados de loading y error
+
+### Dashboard
+- ✅ Búsqueda de artistas en tiempo real
+- ✅ Paginación de resultados
+- ✅ Navegación entre artistas
+- ✅ Información detallada de artistas
+
+### Gestión de Álbumes
+- ✅ Visualización de álbumes guardados
+- ✅ Guardar/eliminar álbumes
+- ✅ Estados de carga optimizados
+- ✅ Persistencia de datos
+
+## 🚀 Deploy en Vercel
+
+1. Conecta tu repositorio con [Vercel](https://vercel.com)
+2. Configura las variables de entorno en el panel de Vercel
+3. Actualiza `SPOTIFY_REDIRECT_URI` con tu dominio de producción
+4. El deploy se realizará automáticamente
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cuevacelis/jose_cueva_full-stack)
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Para cambios importantes:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -m 'feat: agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 👨‍💻 Autor
+
+**José Cueva**
+- GitHub: [@cuevacelis](https://github.com/cuevacelis)
+- LinkedIn: [José Cueva](https://linkedin.com/in/jose-cueva)
+
+---
+
+⭐ Si este proyecto te ha sido útil, ¡no olvides darle una estrella!
