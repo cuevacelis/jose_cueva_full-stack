@@ -23,6 +23,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Music App - Spotify Album Manager",
   description: "Discover artists and save your favorite albums",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -33,12 +34,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
+        className={`
+          min-w-full min-h-screen bg-neutral-800 text-white ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
+        `}
       >
         <TanstackProvider>
-          <SpotifyAuthProvider>
-            {children}
-          </SpotifyAuthProvider>
+          <SpotifyAuthProvider>{children}</SpotifyAuthProvider>
         </TanstackProvider>
       </body>
     </html>

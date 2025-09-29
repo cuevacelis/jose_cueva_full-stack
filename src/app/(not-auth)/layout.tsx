@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
+import NotAuthHeader from "./_layout/not-auth-header";
+import NotAuthMain from "./_layout/not-auth-main";
 
 export default function NotAuthLayout({ children }: LayoutProps<"/">) {
   const { isAuthenticated, loading } = useSpotifyAuth();
@@ -15,7 +17,7 @@ export default function NotAuthLayout({ children }: LayoutProps<"/">) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#222222] text-white flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <div className="text-lg">Loading...</div>
       </div>
     );
@@ -26,10 +28,9 @@ export default function NotAuthLayout({ children }: LayoutProps<"/">) {
   }
 
   return (
-    <div className="min-h-screen bg-[#222222] text-white">
-      <main className="flex items-center justify-center min-h-screen">
-        {children}
-      </main>
-    </div>
+    <>
+      <NotAuthHeader />
+      <NotAuthMain>{children}</NotAuthMain>
+    </>
   );
 }
