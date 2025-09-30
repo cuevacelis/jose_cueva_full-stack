@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`
-          min-w-full min-h-screen dark:bg-neutral-800 dark:text-white ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
+          min-w-full min-h-screen ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
         `}
       >
         <ThemeProvider
