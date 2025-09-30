@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleAxiosError } from "@/lib/api/utils";
 import { axiosSpotifyApi } from "@/lib/api/api-spotify";
-import { fetchSavedAlbumsQueryKeys } from "./use-saved-albums.query";
 
 interface IBodyRemoveAlbum {
   albumId: string;
@@ -17,7 +16,9 @@ interface IProps {
 export const removeAlbum = async (data: IBodyRemoveAlbum): Promise<void> => {
   try {
     await axiosSpotifyApi.delete("/me/albums", {
-      data: { ids: [data.albumId] },
+      params: {
+        ids: data.albumId,
+      },
     });
   } catch (error) {
     return Promise.reject(handleAxiosError(error));
@@ -31,7 +32,7 @@ export function useRemoveAlbumMutation(props?: IProps) {
     mutationFn: removeAlbum,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: fetchSavedAlbumsQueryKeys.all,
+        queryKey: ["albums"],
       });
       props?.config?.onSuccess?.();
     },

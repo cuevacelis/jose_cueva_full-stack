@@ -68,8 +68,8 @@ async function handleSpotifyRequest(
       },
     };
 
-    // Add body for POST, PUT requests
-    if (method === "POST" || method === "PUT") {
+    // Add body for POST, PUT, DELETE requests
+    if (method === "POST" || method === "PUT" || method === "DELETE") {
       const body = await request.text();
       if (body) {
         options.body = body;
