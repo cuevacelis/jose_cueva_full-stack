@@ -1,6 +1,7 @@
-import { Navigation } from "@/app/(auth)/dashboard/_layout/navigation";
+import { AuthHeader } from "@/app/(auth)/dashboard/_layout/auth-header";
 import { verifySession } from "@/lib/dal";
 import { redirect } from "next/navigation";
+import AuthMain from "./_layout/auth-main";
 
 export default async function AuthLayout({
   children,
@@ -12,9 +13,9 @@ export default async function AuthLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#222222] text-white">
-      <Navigation />
-      {children}
-    </div>
+    <>
+      <AuthHeader />
+      <AuthMain>{children}</AuthMain>
+    </>
   );
 }

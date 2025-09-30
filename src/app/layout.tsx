@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import TanstackProvider from "@/context/tanstack/tanstack-provider";
+import { ThemeProvider } from "@/context/theme/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,13 +38,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`
-          min-w-full min-h-screen bg-neutral-800 text-white ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
+          min-w-full min-h-screen dark:bg-neutral-800 dark:text-white ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
         `}
       >
-        <TanstackProvider>{children}</TanstackProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TanstackProvider>{children}</TanstackProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
