@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import TanstackProvider from "@/context/tanstack/tanstack-provider";
-import { SpotifyAuthProvider } from "@/context/auth/spotify-auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +22,13 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Music App - Spotify Album Manager",
   description: "Discover artists and save your favorite albums",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -38,9 +43,7 @@ export default function RootLayout({
           min-w-full min-h-screen bg-neutral-800 text-white ${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased leading-relaxed
         `}
       >
-        <TanstackProvider>
-          <SpotifyAuthProvider>{children}</SpotifyAuthProvider>
-        </TanstackProvider>
+        <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>
   );

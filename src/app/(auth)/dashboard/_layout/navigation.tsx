@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { LogOut, Sun } from "lucide-react";
-import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
 import { Button } from "@/components/ui/button";
+import { logoutAction } from "@/app/(auth)/dashboard/_actions/logout-action";
 
 export function Navigation() {
-  const { logout } = useSpotifyAuth();
+  const handleLogout = async () => {
+    await logoutAction();
+  };
 
   return (
     <header className="h-[87px] flex items-center justify-between px-6 lg:px-20 py-6">
@@ -35,7 +37,7 @@ export function Navigation() {
         </Link>
         <div className="w-px h-6 bg-gray-600" />
         <Button
-          onClick={logout}
+          onClick={handleLogout}
           variant="ghost"
           className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors flex items-center p-0 h-auto"
         >
@@ -60,7 +62,7 @@ export function Navigation() {
         </Link>
         <div className="w-px h-4 bg-gray-600" />
         <Button
-          onClick={logout}
+          onClick={handleLogout}
           variant="ghost"
           className="font-montserrat font-semibold text-white hover:text-[#d6f379] transition-colors p-0 h-auto"
         >

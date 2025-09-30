@@ -1,29 +1,14 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Navigation } from "@/components/navigation";
-import { useSpotifyAuth } from "@/context/auth/spotify-auth-context";
+import { Navigation } from "@/app/(auth)/dashboard/_layout/navigation";
+import { verifySession } from "@/lib/dal";
+import { redirect } from "next/navigation";
 
-export default function AuthLayout({ children }: LayoutProps<"/dashboard">) {
-  const { isAuthenticated, loading } = useSpotifyAuth();
-  const router = useRouter();
+export default async function AuthLayout({
+  children,
+}: LayoutProps<"/dashboard">) {
+  const session = await verifySession();
 
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.replace("/");
-    }
-  }, [isAuthenticated, loading, router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#222222] text-white flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return null;
+  if (!session) {
+    redirect("/");
   }
 
   return (

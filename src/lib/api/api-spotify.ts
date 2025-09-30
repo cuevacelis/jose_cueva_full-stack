@@ -1,14 +1,11 @@
 import axios from "axios";
-import { getAuthToken } from "./utils";
 
 export const axiosSpotifyApi = axios.create();
 
 axiosSpotifyApi.interceptors.request.use(
   (config) => {
-    const token = getAuthToken();
-    config.headers.Authorization = token;
     config.headers["Content-Type"] = "application/json";
-    config.baseURL = "https://api.spotify.com/v1";
+    config.baseURL = "/api/spotify";
     return config;
   },
   (error) => Promise.reject(error)

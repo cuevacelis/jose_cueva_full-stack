@@ -1,3 +1,4 @@
+import { setSpotifyTokens } from "@/lib/dal";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+    const clientId = process.env.SPOTIFY_CLIENT_ID;
     const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
     const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
 
@@ -23,18 +24,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Exchange authorization code for access token
-    const tokenResponse = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
-      },
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: redirectUri,
-      }),
-    });
+    const tokenResponse = await fetch(
+      "https://accounts.spotify.com/api/token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Basic ${Buffer.from(
+            `${clientId}:${clientSecret}`
+          ).toString("base64")}`,
+        },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          code,
+          redirect_uri: redirectUri,
+        }),
+      }
+    );
 
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.json();
@@ -46,14 +52,15 @@ export async function POST(request: NextRequest) {
           clientId: clientId?.substring(0, 8) + "...",
           redirectUri,
           codeLength: code.length,
-          clientSecret: clientSecret ? "***set***" : "***missing***"
-        }
+          clientSecret: clientSecret ? "***set***" : "***missing***",
+        },
       });
       return NextResponse.json(
         {
           error: "Failed to exchange code for token",
-          details: errorData.error_description || errorData.error || "Unknown error",
-          spotifyError: errorData
+          details:
+            errorData.error_description || errorData.error || "Unknown error",
+          spotifyError: errorData,
         },
         { status: 400 }
       );
@@ -61,11 +68,16 @@ export async function POST(request: NextRequest) {
 
     const tokenData = await tokenResponse.json();
 
-    return NextResponse.json({
+    // Store tokens in httpOnly cookies
+    await setSpotifyTokens({
       access_token: tokenData.access_token,
       refresh_token: tokenData.refresh_token,
       expires_in: tokenData.expires_in,
-      token_type: tokenData.token_type,
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Authentication successful",
     });
   } catch (error) {
     console.error("Callback API error:", error);
