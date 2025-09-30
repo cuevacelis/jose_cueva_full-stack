@@ -16,8 +16,8 @@ import {
 import { useSearchArtistsQuery } from "./_services/use-search-artists.query";
 import { useQueryString } from "@/hooks/use-query-string";
 import Image from "next/image";
-import { SearchBar } from "./_components/search-bar";
-import { SearchBarFallback } from "./_components/search-bar-fallback";
+import { SearchBar } from "./_components/search-bar/search-bar";
+import { SearchBarFallback } from "./_components/search-bar/search-bar-fallback";
 
 export const dynamic = "force-dynamic";
 
@@ -113,7 +113,7 @@ export default function DashboardPage() {
         <SearchBar onSearchChange={handleSearchChange} isLoading={isLoading} />
       </Suspense>
 
-      {/* Results Count */}
+      {/* Show Results Count */}
       <div className="font-montserrat mb-6 lg:mb-8 text-left">
         {error ? (
           <p className=" text-red-400 text-sm lg:text-base">
