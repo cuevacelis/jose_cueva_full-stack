@@ -96,13 +96,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12 font-montserrat">
       {/* Title Section */}
       <div className="text-center mb-8 lg:mb-12">
-        <h1 className="font-montserrat font-bold text-4xl sm:text-5xl lg:text-6xl mb-4 lg:mb-6">
-          Busca tus <span className="text-[#d6f379]">artistas</span>
+        <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mb-4 lg:mb-6">
+          Busca tus <span className="text-primary">artistas</span>
         </h1>
-        <p className="font-montserrat text-base lg:text-lg max-w-md mx-auto text-gray-300 leading-6 lg:leading-8 px-4 lg:px-0">
+        <p className="text-base lg:text-lg max-w-md mx-auto text-gray-300 leading-6 lg:leading-8 px-4 lg:px-0">
           Encuentra tus artistas favoritos gracias a nuestro buscador y guarda
           tus álbumes favoritos
         </p>
@@ -114,13 +114,13 @@ export default function DashboardPage() {
       </Suspense>
 
       {/* Results Count */}
-      <div className="mb-6 lg:mb-8">
+      <div className="font-montserrat mb-6 lg:mb-8 text-left">
         {error ? (
-          <p className="font-montserrat text-center text-red-400 text-sm lg:text-base">
+          <p className=" text-red-400 text-sm lg:text-base">
             Error al buscar artistas. Por favor, intenta de nuevo.
           </p>
         ) : (
-          <p className="font-montserrat text-center text-gray-300 text-sm lg:text-base">
+          <p className="ext-gray-300 text-sm lg:text-base">
             {isLoading
               ? "Buscando..."
               : `Mostrando ${
@@ -146,14 +146,12 @@ export default function DashboardPage() {
             </Card>
           ))
         ) : artists.length > 0 ? (
-          artists.map((artist, index) => (
+          artists.map((artist) => (
             <Link key={artist.id} href={`/dashboard/artist/${artist.id}`}>
               <Card
-                className={`border-0 rounded-3xl p-4 lg:p-6 cursor-pointer transition-all hover:scale-105 ${
-                  index === 1
-                    ? "bg-[#d6f379]"
-                    : "bg-transparent hover:bg-gray-800"
-                }`}
+                className={
+                  "font-montserrat border-0 rounded-3xl p-4 lg:p-6 cursor-pointer transition-all hover:scale-105 bg-transparent hover:bg-primary hover:!text-black"
+                }
               >
                 <CardContent className="p-0 space-y-4 lg:space-y-6">
                   <div className="aspect-square rounded-xl overflow-hidden opacity-80">
@@ -165,18 +163,10 @@ export default function DashboardPage() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3
-                    className={`font-montserrat font-semibold text-xl lg:text-3xl ${
-                      index === 1 ? "text-black" : "text-white"
-                    }`}
-                  >
+                  <h3 className="font-semibold text-xl lg:text-3xl">
                     {artist.name}
                   </h3>
-                  <p
-                    className={`font-montserrat font-semibold text-sm lg:text-base ${
-                      index === 1 ? "text-black" : "text-white"
-                    }`}
-                  >
+                  <p className="font-semibold text-sm lg:text-base">
                     Followers: {formatFollowers(artist.followers.total)}
                   </p>
                 </CardContent>
@@ -200,7 +190,7 @@ export default function DashboardPage() {
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  className={`text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer ${
+                  className={`text-white hover:text-primary hover:bg-gray-800 cursor-pointer ${
                     currentPage === 1 ? "opacity-50 pointer-events-none" : ""
                   }`}
                 />
@@ -211,7 +201,7 @@ export default function DashboardPage() {
                   <PaginationItem>
                     <PaginationLink
                       onClick={() => setCurrentPage(1)}
-                      className="text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer"
+                      className="text-white hover:text-primary hover:bg-gray-800 cursor-pointer"
                     >
                       1
                     </PaginationLink>
@@ -228,7 +218,7 @@ export default function DashboardPage() {
                 <PaginationItem>
                   <PaginationLink
                     onClick={() => setCurrentPage(currentPage - 1)}
-                    className="text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer"
+                    className="text-white hover:text-primary hover:bg-gray-800 cursor-pointer"
                   >
                     {currentPage - 1}
                   </PaginationLink>
@@ -238,7 +228,7 @@ export default function DashboardPage() {
               <PaginationItem>
                 <PaginationLink
                   isActive
-                  className="bg-[#d6f379] text-black hover:bg-[#c4e368]"
+                  className="bg-primary text-black hover:bg-[#c4e368]"
                 >
                   {currentPage}
                 </PaginationLink>
@@ -248,7 +238,7 @@ export default function DashboardPage() {
                 <PaginationItem>
                   <PaginationLink
                     onClick={() => setCurrentPage(currentPage + 1)}
-                    className="text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer"
+                    className="text-white hover:text-primary hover:bg-gray-800 cursor-pointer"
                   >
                     {currentPage + 1}
                   </PaginationLink>
@@ -265,7 +255,7 @@ export default function DashboardPage() {
                   <PaginationItem>
                     <PaginationLink
                       onClick={() => setCurrentPage(totalPages)}
-                      className="text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer"
+                      className="text-white hover:text-primary hover:bg-gray-800 cursor-pointer"
                     >
                       {totalPages}
                     </PaginationLink>
@@ -278,7 +268,7 @@ export default function DashboardPage() {
                   onClick={() =>
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
-                  className={`text-white hover:text-[#d6f379] hover:bg-gray-800 cursor-pointer ${
+                  className={`text-white hover:text-primary hover:bg-gray-800 cursor-pointer ${
                     currentPage === totalPages
                       ? "opacity-50 pointer-events-none"
                       : ""
