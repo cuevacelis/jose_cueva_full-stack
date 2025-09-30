@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RefreshCw, Home } from "lucide-react";
 import Link from "next/link";
@@ -11,12 +10,8 @@ interface ErrorPageProps {
 }
 
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
-  useEffect(() => {
-    console.error("Global error:", error);
-  }, [error]);
-
   return (
-    <div className="min-h-screen bg-[#222222] text-white flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-8">
         {/* Error Icon */}
         <div className="flex justify-center">
@@ -31,7 +26,8 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             ¡Oops! Algo salió mal
           </h1>
           <p className="font-montserrat text-gray-300 text-lg">
-            Ha ocurrido un error inesperado. Por favor, intenta de nuevo o vuelve al inicio.
+            Ha ocurrido un error inesperado. Por favor, intenta de nuevo o
+            vuelve al inicio.
           </p>
 
           {/* Error Details for Development */}
@@ -52,7 +48,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button
             onClick={reset}
-            className="bg-[#d6f379] hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3"
+            className="bg-primary hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Intentar de nuevo

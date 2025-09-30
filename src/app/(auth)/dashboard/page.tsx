@@ -19,7 +19,7 @@ import Image from "next/image";
 import { SearchBar } from "./_components/search-bar";
 import { SearchBarFallback } from "./_components/search-bar-fallback";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -158,8 +158,8 @@ export default function DashboardPage() {
                 <CardContent className="p-0 space-y-4 lg:space-y-6">
                   <div className="aspect-square rounded-xl overflow-hidden opacity-80">
                     <Image
-                      width={artist.images[0]?.width}
-                      height={artist.images[0]?.height}
+                      width={artist.images[0]?.width || 272}
+                      height={artist.images[0]?.height || 241}
                       src={getArtistImage(artist.images)}
                       alt={artist.name}
                       className="w-full h-full object-cover"

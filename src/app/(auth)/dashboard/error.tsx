@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RefreshCw, Home, Music } from "lucide-react";
 import Link from "next/link";
@@ -10,15 +9,17 @@ interface DashboardErrorPageProps {
   reset: () => void;
 }
 
-export default function DashboardErrorPage({ error, reset }: DashboardErrorPageProps) {
-  useEffect(() => {
-    console.error("Dashboard error:", error);
-  }, [error]);
-
-  const isSpotifyError = error.message.includes("401") || error.message.includes("403") || error.message.includes("spotify");
+export default function DashboardErrorPage({
+  error,
+  reset,
+}: DashboardErrorPageProps) {
+  const isSpotifyError =
+    error.message.includes("401") ||
+    error.message.includes("403") ||
+    error.message.includes("spotify");
 
   return (
-    <div className="min-h-screen bg-[#222222] text-white flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-8">
         {/* Error Icon */}
         <div className="flex justify-center">
@@ -44,22 +45,23 @@ export default function DashboardErrorPage({ error, reset }: DashboardErrorPageP
               </p>
               <ul className="text-left space-y-2 text-gray-300 bg-gray-800/50 rounded-lg p-4">
                 <li className="flex items-start">
-                  <span className="text-[#d6f379] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   Sesión expirada
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#d6f379] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   Permisos de Spotify revocados
                 </li>
                 <li className="flex items-start">
-                  <span className="text-[#d6f379] mr-2">•</span>
+                  <span className="text-primary mr-2">•</span>
                   Problemas de conectividad
                 </li>
               </ul>
             </div>
           ) : (
             <p className="font-montserrat text-gray-300 text-lg">
-              Ha ocurrido un error inesperado en el dashboard. Por favor, intenta de nuevo.
+              Ha ocurrido un error inesperado en el dashboard. Por favor,
+              intenta de nuevo.
             </p>
           )}
 
@@ -82,7 +84,7 @@ export default function DashboardErrorPage({ error, reset }: DashboardErrorPageP
           {isSpotifyError ? (
             <>
               <Link href="/" className="w-full">
-                <Button className="w-full bg-[#d6f379] hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3">
+                <Button className="w-full bg-primary hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3">
                   <Music className="w-4 h-4 mr-2" />
                   Reconectar con Spotify
                 </Button>
@@ -101,7 +103,7 @@ export default function DashboardErrorPage({ error, reset }: DashboardErrorPageP
             <>
               <Button
                 onClick={reset}
-                className="w-full bg-[#d6f379] hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3"
+                className="w-full bg-primary hover:bg-[#c4e368] text-black font-montserrat font-semibold rounded-2xl px-6 py-3"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Intentar de nuevo
@@ -118,26 +120,6 @@ export default function DashboardErrorPage({ error, reset }: DashboardErrorPageP
               </Link>
             </>
           )}
-        </div>
-
-        {/* Support Information */}
-        <div className="text-sm text-gray-400 space-y-2">
-          <p>Si el problema persiste:</p>
-          <div className="flex flex-col gap-1">
-            <Link
-              href="/dashboard/albums"
-              className="text-[#d6f379] hover:text-[#c4e368] underline decoration-dotted"
-            >
-              Ver mis álbumes guardados
-            </Link>
-            <span className="text-gray-600">o</span>
-            <Link
-              href="/"
-              className="text-[#d6f379] hover:text-[#c4e368] underline decoration-dotted"
-            >
-              Volver al inicio
-            </Link>
-          </div>
         </div>
       </div>
     </div>

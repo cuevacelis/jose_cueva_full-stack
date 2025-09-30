@@ -12,34 +12,31 @@ export function AuthHeader() {
   };
 
   return (
-    <header className="font-montserrat flex items-center justify-between px-6 py-6 md:px-10 lg:px-20">
+    <header className="font-montserrat text-base flex items-center justify-between px-6 py-6 md:px-10 lg:px-20">
       <Link
         href="/dashboard"
-        className="text-xl lg:text-2xl font-bold text-[#d6f379] hover:text-white transition-colors"
+        className="text-xl lg:text-2xl font-bold text-primary hover:text-foreground transition-colors"
       >
         ♪ MUSIC
       </Link>
       <div className="flex justify-center items-center gap-10">
         <Link
           href="/dashboard"
-          className="font-semibold transition-colors text-white hover:text-[#d6f379]"
+          className="text-base font-semibold transition-colors hover:text-primary"
         >
           Buscar
         </Link>
         <Link
           href="/dashboard/albums"
-          className="font-semibold transition-colors text-white hover:text-[#d6f379]"
+          className="text-base font-semibold transition-colors hover:text-primary"
         >
           Mis albumes
         </Link>
-        <Separator
-          orientation="vertical"
-          className="w-6"
-        />
+        <Separator orientation="vertical" className="!h-6 bg-foreground" />
         <Button
           onClick={handleLogout}
-          variant="link"
-          className="font-semibold text-white hover:text-[#d6f379] transition-colors flex items-center p-0 h-auto"
+          variant="ghost"
+          className="text-base font-semibold hover:text-primary transition-colors flex items-center p-0 h-auto"
         >
           Cerrar sesión
         </Button>
