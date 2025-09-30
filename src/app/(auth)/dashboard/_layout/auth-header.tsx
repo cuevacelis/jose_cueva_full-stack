@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { LogOut, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logoutAction } from "@/app/(auth)/dashboard/_actions/logout-action";
 import { Separator } from "@/components/ui/separator";
